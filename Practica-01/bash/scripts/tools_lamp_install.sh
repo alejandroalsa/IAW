@@ -84,7 +84,7 @@ source variables.sh
         # Copia de archivo htaccess en /var/www/html/###/.htaccess
         cp../htaccess/htaccess /var/www/html/stats/.htaccess
 
-        #Copia de archivo de configuracion de Apache
+        # Copia de archivo de configuracion de Apache
         cp../conf/000-default-htaccess.conf /etc/apache2/sites-available/000-default.conf
 
         # Reinicio Apache
