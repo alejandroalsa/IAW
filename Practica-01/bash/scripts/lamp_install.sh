@@ -3,14 +3,14 @@
 clear
 set -x
 
-# Actualizamos los repositorios
+# Actualización de repositorios
     apt-get update
 
-# Actualizamos los paquetes nuevos
+# Actualización los paquetes nuevos
     apt-get upgrade -y
 
 # <-------------------------------------------------->
-# Instalamos lo programas para la pila LAMP
+# Instalación pila LAMP
 # <-------------------------------------------------->
 
     # Instalamos el servidor web de apache
@@ -23,8 +23,8 @@ set -x
     apt-get install php libapache2-mod-php php-mysql -y
     
 # <-------------------------------------------------->
-# Instalamos lo programas para la pila LAMP
+# Instalación pila LAMP
 # <-------------------------------------------------->
 
-# Copiamos el archivo phpinfo de PHP
+# Copua del archivo phpinfo.php de PHP
     cp ../php/info.php /var/www/html
