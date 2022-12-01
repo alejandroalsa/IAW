@@ -27,4 +27,4 @@ set -x
 # <-------------------------------------------------->
 
 # Copua del archivo phpinfo.php de PHP
-    cp ../php/info.php /var/www/html
+    cp ../php/phpinfo.php /var/www/html

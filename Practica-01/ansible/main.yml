@@ -1,0 +1,3 @@
+---
+- import_playbook: ./tasks/lamp_install.yml
+- import_playbook: ./tasks/tools_lamp_install.yml

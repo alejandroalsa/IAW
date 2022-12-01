@@ -79,13 +79,12 @@ source variables.sh
 
         # Creamos a los usuario/contraseñas en un archivo
         htpasswd -bc /etc/apache2/keys/.htpasswd $STATS_USER_1 $STATS_PASSWORD_USER_1
-        htpasswd -b /etc/apache2/keys/.htpasswd $STATS_USER_2 $STATS_PASSWORD_USER_2
-        
+                
         # Copia de archivo htaccess en /var/www/html/###/.htaccess
-        cp../htaccess/htaccess /var/www/html/stats/.htaccess
+        cp ../conf/htaccess /var/www/html/stats/.htaccess
 
         # Copia de archivo de configuracion de Apache
-        cp../conf/000-default-htaccess.conf /etc/apache2/sites-available/000-default.conf
+        cp ../conf/000-default.conf /etc/apache2/sites-available/000-default.conf
 
         # Reinicio Apache
         systemctl restart apache2.service
