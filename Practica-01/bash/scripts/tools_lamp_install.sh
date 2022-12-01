@@ -1,7 +1,6 @@
 #!/bin/bash
 
 clear
-
 set -x
 
 # Variables de configuración
