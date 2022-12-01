@@ -1,0 +1,6 @@
+
+PHPMYADMIN_PASSWORD=password
+STATS_USER_1=alejandro
+STATS_PASSWORD_USER_1=alejandro
+STATS_USER_2=alejandroalsa
+STATS_PASSWORD_USER_2=alejandroalsa
