@@ -19,6 +19,9 @@ LAMP_PASS=alejandro
 
     rm -fr phpMyAdmin
 
+    sed -i "s/'lamp_db'/$LAMP_DB/" /tmp/iaw-practica-lamp/db/database.sql
+
+
 # Ejecutamos el Script de sql para la creacion de la base de datos. 
     mysql -u root < /tmp/iaw-practica-lamp/db/database.sql
 
