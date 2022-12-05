@@ -1,13 +1,13 @@
 ---
 - name: Playbook para instalar la pila LAMP
   hosts: SERVER
-  become: yes
+  become: true
 
   tasks:
 
     - name: Actualizando repositorios
       apt:
-        update_cache: yes
+        update_cache: ture
 
     - name: Instalando servidor web Apache2.4
       apt:
@@ -29,6 +29,6 @@
         state: present
 
     - name: Reiniciando Apache2.4
-      service: 
+      service:
         name: apache2.service
         state: restarted
