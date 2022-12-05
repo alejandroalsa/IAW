@@ -27,6 +27,9 @@ source variables.sh
 # Asignación de privilegios al usuario
     mysql -u root <<< "GRANT ALL PRIVILEGES ON $LAMP_DB.* TO '$LAMP_USER'@'%';"
 
+# Movimiento de todos los archivos a /var/www/html
+    mv /tmp/iaw-practica-lamp/src/* /var/www/html
+
 # Modificación del campo lamp_db para la sustitución del nuestro
     sed -i "s/'lamp_db'/$LAMP_DB/" /var/www/html/config.php
 
@@ -35,9 +38,6 @@ source variables.sh
 
 # Modificación del campo lamp_password para la sustitución del nuestro 
     sed -i "s/'lamp_password'/$LAMP_PASS/" /var/www/html/config.php  
-
-# Movimiento de todos los archivos a /var/www/html
-    mv /tmp/iaw-practica-lamp/src/* /var/www/html
 
 # Asignación de usario y grupo a todos los archivos de /var/www/html
     chown www-data:www-data /var/www/html -R 
