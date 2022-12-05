@@ -1,0 +1,4 @@
+---
+- import_playbook: lamp_install.yml
+- import_playbook: prestashop_install.yml
+- import_playbook: ssl.yml
