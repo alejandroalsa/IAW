@@ -22,7 +22,7 @@ source variables.sh
     mysql -u root <<< "CREATE USER IF NOT EXISTS '$LAMP_USER'@'%'"
 
 # Asignación de una contraseña al usuario
-    mysql -u root <<< "SET PASSWORD FOR '$LAMP_USER'@'%' = '$LAMP_PASSWORD'"
+    mysql -u root <<< "SET PASSWORD FOR '$LAMP_USER'@'%' = '$LAMP_PASS'"
 
 # Asignación de privilegios al usuario
     mysql -u root <<< "GRANT ALL PRIVILEGES ON $LAMP_DB.* TO '$LAMP_USER'@'%';"
