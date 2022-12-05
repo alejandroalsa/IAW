@@ -1,11 +1,7 @@
-#!/bin/bashPractica-023
+#!/bin/bash
 
 clear
-
 set -x
-
-# Variables de configuración
-
 source variables.sh
 
 # <--------------------------------------------------------->
@@ -20,10 +16,6 @@ source variables.sh
 
     # Instalación phpmyadmin
     apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
-
-# <--------------------------------------------------------->
-# Instalación herramientas adicionales pila LAMP
-# <--------------------------------------------------------->
 
     # <---------------------------->
     # Instalación Adminer
