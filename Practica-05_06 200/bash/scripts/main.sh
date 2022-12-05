@@ -16,14 +16,13 @@ set -x
 
    . ./lamp_tools_install.sh
 
-# Instalacion de certificado SSL
-
-   . ./ssl_install.sh
-
 # Instalacion de la PrestaShop
 
    . ./prestashop_install.sh
     
+# Instalacion de certificado SSL
+
+   . ./ssl_install.sh
 # <------------------------------------------->
 # Instalacion de PrestaShop
 # <------------------------------------------->
