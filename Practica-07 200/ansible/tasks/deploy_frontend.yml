@@ -7,7 +7,7 @@
 
   - name: Variables de Configuracion
     ansible.builtin.include_vars:
-      ./variables/variables.yml
+      variables.yml
 
   - name: Eliminando del directorio iaw-practica-lamp de /tmp
     file:
