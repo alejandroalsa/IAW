@@ -4,19 +4,20 @@ clear
 set -x
 source variables.sh
 
-# Movimiento a la carpeta de tmp.
-    cd /tmp
-
 # Eliminación de cualquier carpeta que este en el directorio /tmp con el nombre iaw-practica-lamp.
-    rm -rf iaw-practica-lamp
+    rm -rf /tmp/iaw-practica-lamp
 
 # Clonación del repositorio
-    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git
+    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git /tmp/iaw-practica-lamp
 
+# Eliminación de instalaciones anteriores
     rm -fr phpMyAdmin
 
+# Modificación del campo lamp_db por la sustitución del nuestro
+    sed -i "s/lamp_db/$LAMP_DB/" /tmp/iaw-practica-lamp/db/database.sql
+
 # Ejecución del Script de sql para la creación de la base de datos. 
-    mysql -u root < iaw-practica-lamp/db/database.sql
+    mysql -u root < /tmp/iaw-practica-lamp/db/database.sql
 
 # Eliminacion del usuario si existe
     mysql -u root <<< "DROP USER IF EXISTS $LAMP_USER"
@@ -27,17 +28,17 @@ source variables.sh
 # Asignacion de privilegios sobre la base de datos
     mysql -u root <<< "GRANT ALL PRIVILEGES ON $LAMP_DB.* TO '$LAMP_USER'@'%'"
 
-# Modificación del campo lamp_db para la sustitución del nuestro
-    sed -i "s/lamp_db/$LAMP_DB/" /var/www/html/config.php  
-
-# Modificación del campo lamp_user para la sustitución del nuestro
-    sed -i "s/lamp_user/$LAMP_USER/" /var/www/html/config.php  
-
-# Modificación del campo lamp_password para la sustitución del nuestro 
-    sed -i "s/lamp_password/$LAMP_PASS/" /var/www/html/config.php
-
 # Movimiento de todos los archivos a /var/www/html
     mv /tmp/iaw-practica-lamp/src/* /var/www/html
+
+# Modificación del campo lamp_db por la sustitución del nuestro
+    sed -i "s/lamp_db/$LAMP_DB/" /var/www/html/config.php  
+
+# Modificación del campo lamp_user por la sustitución del nuestro
+    sed -i "s/lamp_user/$LAMP_USER/" /var/www/html/config.php  
+
+# Modificación del campo lamp_password por la sustitución del nuestro 
+    sed -i "s/lamp_password/$LAMP_PASS/" /var/www/html/config.php
 
 # Asignación de usario y grupo a todos los archivos de /var/www/html
     chown www-data:www-data /var/www/html -R
