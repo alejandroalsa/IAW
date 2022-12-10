@@ -111,6 +111,3 @@
       ansible.builtin.service:
         name: apache2.service
         state: restarted
-
-
-

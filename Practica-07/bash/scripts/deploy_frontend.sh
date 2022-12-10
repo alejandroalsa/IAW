@@ -7,7 +7,7 @@ source variables.sh
     rm -rf /tmp/iaw-practica-lamp
 
 # Clonacion del repositorio
-    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git /tmp
+    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git /tmp/iaw-practica-lamp
 
 # Movimiento del codigo fuente a /var/www/html
     mv /tmp/iaw-practica-lamp/src/* /var/www/html

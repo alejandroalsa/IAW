@@ -23,7 +23,7 @@ source variables.sh
     rm -rf /tmp/iaw-practica-lamp
 
 # Clonación del repositorio
-    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git /tmp
+    git clone https://github.com/josejuansanchez/iaw-practica-lamp.git /tmp/iaw-practica-lamp
 
 # Modificacion del nombre de la base de datos
     sed -i "s/lamp_db/$DB_NAME/" /tmp/iaw-practica-lamp/db/database.sql
