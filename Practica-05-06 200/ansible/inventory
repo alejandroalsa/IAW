@@ -1,5 +1,5 @@
 [SERVER]
-3.235.163.235
+3.235.163.231
 
 [SERVER:vars]
 ansible_user=ubuntu
