@@ -112,7 +112,7 @@ github_pat_11AQFZT4A06PEGBCHEz3vh_uWt7a5FzrbcxDs40G0Gytxd6XENftFQEWVxyOpH4QIGO6R
 ## Descarga
 
 ```
-git clone https://github.com/LLALEX-ESP/iaw-practica-05.git
+git clone https://github.com/alejandroalsa/IAW.git
 ```
 
 # IAW Practica 06
