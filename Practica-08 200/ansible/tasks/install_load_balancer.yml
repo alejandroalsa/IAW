@@ -51,8 +51,8 @@
 
                 ProxyPass / balancer://mycluster/
             </VirtualHost>
-            
+
     - name: Reiniciando Apache2.4
-      service: 
+      service:
         name: apache2.service
-        state: restarted
+        state: restarted  

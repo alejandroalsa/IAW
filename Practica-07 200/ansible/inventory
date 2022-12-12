@@ -1,9 +1,9 @@
 [FRONTEND]
-44.193.15.173
+3.238.252.56
 [BACKEND]
-3.80.159.94
+34.231.20.30
 
 [all:vars]
 ansible_user= ubuntu
-ansible_ssh_private_key_file=/home/alejandro/AWS/vockey.pem
+ansible_ssh_private_key_file=/home/alejandro/Documentos/AWS/vockey.pem
 ansible_ssh_common_args='-o StrictHostKeyChecking=accept-new'

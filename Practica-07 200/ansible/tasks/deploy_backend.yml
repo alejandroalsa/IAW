@@ -44,7 +44,7 @@
       priv: "{{ DB_NAME }}.*:ALL,GRANT"
       state: present
       login_unix_socket: /var/run/mysqld/mysqld.sock
-  
+
   - name: Clonando repositorio de la APP Web
     git:
       repo: https://github.com/josejuansanchez/iaw-practica-lamp.git
@@ -63,4 +63,4 @@
   - name: Reiniciando el Servicio de MySQL
     service:
       name: mysql
-      state: restarted 
+      state: restarted
