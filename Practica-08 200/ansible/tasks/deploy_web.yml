@@ -1,7 +1,7 @@
 ---
 - name: Playbook despliege APP Web
   hosts: FRONTEND
-  become: yes
+  become: true
 
   tasks:
 
@@ -57,13 +57,13 @@
   - name: Reiniciando el Servicio de MySQL
     service:
       name: mysql
-      state: restarted 
+      state: restarted
 
   - name: Moviendo el codigo fuente de la APP Web a /var/www/html/
     copy:
       src: /tmp/iaw-practica-lamp/src/
       dest: /var/www/html/
-      remote_src: yes
+      remote_src: true
 
   - name: Configurando las variables de conexion (LAMP_DB)
     ansible.builtin.replace:

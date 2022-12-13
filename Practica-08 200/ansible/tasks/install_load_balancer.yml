@@ -55,4 +55,4 @@
     - name: Reiniciando Apache2.4
       service:
         name: apache2.service
-        state: restarted  
+        state: restarted

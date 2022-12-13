@@ -7,7 +7,7 @@
 
     - name: Actualizando repositorios
       apt:
-        update_cache: yes
+        update_cache: true
 
     - name: Instalando servidor web Apache2.4
       apt:
