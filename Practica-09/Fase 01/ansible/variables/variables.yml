@@ -1,0 +1,8 @@
+---  
+DB_HOST: localhost
+DB_NAME: daba_wp
+DB_USER: user_wp
+DB_PASS: pass_wp
+
+WP_HOME: http://35.170.76.237
+WP_SITEURL: http://35.170.76.237/wordpress
