@@ -1,7 +1,7 @@
 ---
 - name: Playbook despliege APP Web
   hosts: SERVER
-  become: yes
+  become: true
 
   tasks:
 
@@ -63,7 +63,7 @@
     copy:
       src: /tmp/iaw-practica-lamp/src/
       dest: /var/www/html/
-      remote_src: yes
+      remote_src: true
 
   - name: Configurando las variables de conexion (LAMP_DB)
     ansible.builtin.replace:

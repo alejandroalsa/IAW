@@ -1,7 +1,7 @@
 ---
 - name: Playbook de instalacion de FrontEnd
   hosts: FRONTEND
-  become: yes
+  become: true
 
   tasks:
 
@@ -11,7 +11,7 @@
 
   - name: Actualizando repositorios
     apt:
-      update_cache: yes
+      update_cache: true
 
   - name: Instalando el servidor Web Apache2.4
     apt:

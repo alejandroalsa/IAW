@@ -1,7 +1,7 @@
 ---
 - name: PlayBook para instalar Certbot
   hosts: SERVER
-  become: yes
+  become: true
 
   vars:
     - DOMAIN: alejandroalsa02.ddns.net

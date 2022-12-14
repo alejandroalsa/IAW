@@ -1,7 +1,7 @@
 ---
 - name: Playbook para instalar la pila LAMP
   hosts: SERVER
-  become: yes
+  become: true
   # vars_files:
   #   - ./variables/variables.yml
 
@@ -73,7 +73,7 @@
 
     - name: Actualizando repositorios
       apt:
-        update_cache: yes
+        update_cache: true
 
     - name: Instalando GoAccess
       apt:

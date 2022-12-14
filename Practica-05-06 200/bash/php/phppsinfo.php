@@ -400,7 +400,7 @@ class PhpPsInfo
     public function toString($value)
     {
         if ($value === true) {
-            return 'Yes';
+            return 'true';
         } elseif ($value === false) {
             return 'No';
         } elseif ($value === null) {

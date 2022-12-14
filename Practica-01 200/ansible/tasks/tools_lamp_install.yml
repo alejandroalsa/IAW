@@ -1,7 +1,7 @@
 ---
 - name: Playbook para instalar la pila LAMP
   hosts: SERVER
-  become: yes
+  become: true
 
   vars:
     - PHPMYADMIN_PASSWORD=wX68p@^q@%ivux8&nrazuseEy1jV4
@@ -48,7 +48,7 @@
 
     - name: Actualizando repositorios
       apt:
-        update_cache: yes
+        update_cache: true
 
     - name: Instalando GoAccess
       apt:

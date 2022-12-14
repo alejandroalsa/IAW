@@ -1,7 +1,7 @@
 ---
 - name: Playbook para crear balanceador de carga en Apache2.4
   hosts: SERVER
-  become: yes
+  become: true
 
   tasks:
 

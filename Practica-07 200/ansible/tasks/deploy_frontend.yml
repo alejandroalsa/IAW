@@ -1,7 +1,7 @@
 ---
 - name: Playbook despliege FrontEnd
   hosts: FRONTEND
-  become: yes
+  become: true
 
   tasks:
 
@@ -23,7 +23,7 @@
     copy:
       src: /tmp/iaw-practica-lamp/src/
       dest: /var/www/html/
-      remote_src: yes
+      remote_src: true
 
   - name: Eliminando el directorio de Instalaciones previas
     file:
