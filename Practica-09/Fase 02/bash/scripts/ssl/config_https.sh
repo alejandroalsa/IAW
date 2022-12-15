@@ -1,8 +1,8 @@
 #!/bin/bash
-clear
 set -x
-source variables.sh
-    
+clear
+source ../variables.sh
+
 # <-------------------------------------------------->
 # Instalación de Certbot
 # <-------------------------------------------------->

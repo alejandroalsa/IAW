@@ -1,9 +1,6 @@
 #!/bin/bash
-
 set -x 
-
 clear
-
 source variables.sh
 
 wget https://wordpress.org/latest.zip -O /tmp/latest.zip

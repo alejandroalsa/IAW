@@ -1,7 +1,6 @@
 #!/bin/bash
-
-clear
 set -x
+clear
 
 # Actualización de repositorios
     apt-get update
@@ -23,5 +22,11 @@ set -x
 # Instalación pila LAMP
 # <-------------------------------------------------->
 
-# Copia del archivo phpinfo.php de PHP
-    cp ../php/phpinfo.php /var/www/html
+# Copia del archivo 000-default.conf
+    cp ../../conf/000-default.conf /etc/apache2/sites-available
+
+# Copia del archivo dir.conf
+    cp ../../conf/dir.conf /etc/apache2/mods-available
+
+# Reinicio del servidor web Apache2.4
+    systemctl restart apache2
