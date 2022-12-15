@@ -20,5 +20,7 @@ clear
 # Pasamos el archivo de conf a /etc/exports
     cp ../conf/exports /etc/exports
 
+
+
 # Reiniciamos el servidor nfs
     systemctl restart nfs-kernel-server

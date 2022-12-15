@@ -57,7 +57,7 @@
 
 
   - name: Copiamos el archivo index.php 
-    copy:
+    ansible.builtin.copy:
       src: /var/www/html/wordpress/index.php
       dest: /var/www/html/index.php
       remote_src: true
@@ -69,6 +69,7 @@
       block: |
         define('WP_HOME', '{{ WP_HOME }}');
         define('WP_SITEURL', '{{ WP_SITEURL }}');
+        $_SERVER['HTTPS'] = 'on';
 
   - name: Modificación del archivo index.php
     ansible.builtin.replace:
