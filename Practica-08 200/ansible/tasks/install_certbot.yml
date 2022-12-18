@@ -40,3 +40,4 @@
 
     - name: Obteniendo certificado SSL y configurando el servidor web.
       command: certbot --apache -m {{ EMAIL }} --agree-tos --no-eff-email -d {{ DOMAIN }}
+
