@@ -9,8 +9,8 @@
       ansible.builtin.include_vars:
         ../../variables/variables.yml
 
-    - name: Instalamos el gestor de paquetes de Python3
-      ansible.builtin.apt:
+    - name: Instalando el gestor de paquetes de Python3
+      apt:
         name: python3-pip
         state: present
 

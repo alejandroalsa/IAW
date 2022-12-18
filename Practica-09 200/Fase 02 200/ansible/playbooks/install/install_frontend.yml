@@ -1,6 +1,6 @@
 ---
 - name: Playbook para instalar la pila LAMP
-  hosts: FRONTEND
+  hosts: front
   become: true
 
   tasks:
@@ -38,13 +38,13 @@
 
     - name: Añadimos dir.conf
       ansible.builtin.template:
-        src: ../template/dir.conf.j2
+        src: ../../templates/dir.conf.j2
         dest: /etc/apache2/mods-available/dir.conf
         mode: 0644
 
     - name: Añadimos 000-default.conf
       ansible.builtin.template:
-        src: ../template/000-default.conf.j2
+        src: ../../templates/000-default.conf.j2
         dest: /etc/apache2/sites-available/000-default.conf
         mode: 0644
 

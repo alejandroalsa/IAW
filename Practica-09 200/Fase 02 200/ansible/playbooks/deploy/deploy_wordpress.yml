@@ -25,7 +25,7 @@
       dest: /var/www/html
       remote_src: true
 
-  - name: COpiamos el archvio de configuración de ejemplo y creamos uno
+  - name: Copiamos el archvio de configuración de ejemplo y creamos uno
     copy:
       src: /var/www/html/wordpress/wp-config-sample.php
       dest: /var/www/html/wordpress/wp-config.php

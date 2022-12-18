@@ -1,6 +1,6 @@
 ---
 - name: PlayBook para instalar Certbot
-  hosts: SERVER
+  hosts: balanceador
   become: true
 
   tasks:

@@ -1,6 +1,6 @@
 ---
 - name: Playbook para instalar la pila LAMP
-  hosts: BACKEND
+  hosts: bak
   become: true
 
   tasks:

@@ -1,6 +1,6 @@
 ---
 - name: Playbook para crear balanceador de carga en Apache2.4
-  hosts: SERVER
+  hosts: balanceador
   become: true
 
   tasks:
@@ -8,6 +8,11 @@
     - name: Variables de Configuracion
       ansible.builtin.include_vars:
         ../../variables/variables.yml
+
+    - name: Instalando servidor web Apache2.4
+      apt:
+        name: apache2
+        state: present
 
     - name: Activando modulos de Apache
       community.general.apache2_module:
@@ -32,7 +37,7 @@
 
     - name: Añadimos dir.conf
       ansible.builtin.template:
-        src: ../template/000-default_balanceador.j2
+        src: ../../templates/000-default_balanceador.j2
         dest: /etc/apache2/sites-available/000-default.conf
         mode: 0644
 
