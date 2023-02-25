@@ -1,0 +1,54 @@
+---
+- name: Playbook para instalar la pila LAMP
+  hosts: front
+  become: true
+
+  tasks:
+
+    - name: Variables de Configuracion
+      ansible.builtin.include_vars:
+        ../../variables/variables.yml
+
+    - name: Actualizando repositorios
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Instalando servidor web Apache2.4
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+
+    - name: Instalando PHP y mudulos de PHP
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - libapache2-mod-php
+        - php-mysql
+
+    - name: Instalamos el módulo rewrite
+      community.general.apache2_module:
+        name: rewrite
+        state: present
+
+    - name: Eliminamos los archivos clonados innecesarios.
+      ansible.builtin.file:
+        path: /etc/apache2/sites-available/000-default.conf
+
+    - name: Añadimos dir.conf
+      ansible.builtin.template:
+        src: ../../templates/dir.conf.j2
+        dest: /etc/apache2/mods-available/dir.conf
+        mode: 0644
+
+    - name: Añadimos 000-default.conf
+      ansible.builtin.template:
+        src: ../../templates/000-default.conf.j2
+        dest: /etc/apache2/sites-available/000-default.conf
+        mode: 0644
+
+    - name: Reiniciando Apache2.4
+      ansible.builtin.service:
+        name: apache2.service
+        state: restarted

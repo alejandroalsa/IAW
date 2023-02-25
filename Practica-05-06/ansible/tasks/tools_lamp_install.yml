@@ -1,0 +1,118 @@
+---
+- name: Playbook para instalar la pila LAMP
+  hosts: SERVER
+  become: true
+  # vars_files:
+  #   - ./variables/variables.yml
+
+  tasks:
+
+    - name: Añadimos las variables
+      ansible.builtin.include_vars:
+        ../variables/variables.yml
+
+
+    - name: Instalando phpmyadmin
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - phpmyadmin
+        - php-mbstring
+        - php-zip
+        - php-gd
+        - php-json
+        - php-curl
+
+
+    - name: Creacion de directorio de Adminer
+      ansible.builtin.file:
+        path: /var/www/html/adminer
+        owner: www-data
+        group: www-data
+        mode: 0755
+        state: directory
+
+    - name: Descargando Adminer
+      ansible.builtin.get_url:
+        url: https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-mysql.php
+        dest: /var/www/html/adminer
+
+    - name: Renombrando adminer-4.8.1-mysql.php -> index.php
+      shell: mv /var/www/html/adminer/adminer-4.8.1-mysql.php  /var/www/html/adminer/index.php
+
+
+    - name: Añadiendo repositorio de GoAccess
+      ansible.builtin.apt_repository:
+        repo: deb http://deb.goaccess.io/ $(lsb_release -cs) main
+        state: present
+        filename: /etc/apt/sources.list.d/goaccess.list
+
+    - name: Actualizando repositorios
+      apt:
+        update_cache: true
+
+    - name: Instalando GoAccess
+      apt:
+        name: apache2
+        state: present
+
+    - name: Creando directorio de Estadisticas.
+      ansible.builtin.file:
+        path: /var/www/html/stats/
+        owner: www-data
+        group: www-data
+        mode: 0755
+        state: directory
+
+    - name: Ejecutando GooAccess en segundo plan
+      shell: mv adminer-4.8.1-mysql.php  /var/www/html/adminer/index.php
+
+    - name: Creando directorio de Claves
+      ansible.builtin.file:
+        path: /etc/apache2/keys
+        state: directory
+
+    - name: Creando usuarios para analizar estadisticas
+      community.general.htpasswd:
+        path: /etc/apache2/keys/.htpasswd
+        name: '{{ STATS_USER_1 }}'
+        password: '{{ STATS_PASSWORD_USER_1 }}'
+        owner: root
+        group: www-data
+        mode: 0640
+
+    - name: Creando archivo .htaccess
+      ansible.builtin.file:
+        path: /var/www/html/stats/.htaccess
+        state: touch
+
+    - name: Creando contenido de .htaccess
+      ansible.builtin.blockinfile:
+        path: /var/www/html/stats/.htaccess
+        block: |
+          AuthType Basic
+          AuthName "Acceso restringido"
+          AuthBasicProvider file
+          AuthUserFile "/etc/apache2/keys/.htpasswd"
+          Require valid-user
+
+    - name: Creando contenido de 000-default.conf
+      ansible.builtin.blockinfile:
+        path: /var/www/html/stats/.htaccess
+        block: |
+          <Directory "/var/www/html/stats">
+            AuthType Basic
+            AuthName "Acceso restringido"
+            AuthBasicProvider file
+            AuthUserFile "/etc/apache2/keys/.htpasswd"
+            Require valid-user
+          </Directory>
+
+    - name: Reiniciando Apache2.4
+      ansible.builtin.service:
+        name: apache2.service
+        state: restarted
+
+
+

@@ -1,0 +1,9 @@
+---
+  - import_playbook: ./playbooks/install/install_frontend.yml
+  - import_playbook: ./playbooks/install/install_backend.yml
+  - import_playbook: ./playbooks/deploy/deploy_backend.yml
+  - import_playbook: ./playbooks/install/install_load_balancer.yml
+  - import_playbook: ./playbooks/ssl/install_cerbot.yml
+  - import_playbook: ./playbooks/install/install_nfs_server.yml
+  - import_playbook: ./playbooks/install/install_nfs_client.yml
+  - import_playbook: ./playbooks/deploy/deploy_wordpress.yml

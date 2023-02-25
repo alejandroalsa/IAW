@@ -1,0 +1,33 @@
+---
+- name: Playbook para instalar la pila nfs
+  hosts: nfs
+  become: true
+
+  tasks:
+
+  - name: Actualizar los repositorios
+    apt:
+      update_cache: true
+
+  - name: Instalación nfs server
+    apt:
+      name: nfs-kernel-server
+
+  - name: Creamos el directorio
+    ansible.builtin.file:
+      path: /var/www/html
+      state: directory
+      mode: 0755
+      owner: nobody
+      group: nogroup
+
+  - name: Añadimos exports
+    ansible.builtin.template:
+      src: ../../templates/exports.j2
+      dest: /etc/exports
+      mode: 0644
+
+  - name: Reiniciamos el servidor servidor nfs
+    ansible.builtin.service:
+      name: nfs-kernel-server
+      state: restarted

@@ -1,0 +1,26 @@
+---
+prestashop_version: 8.0.0
+prestashop_url_descarga: "https://github.com/PrestaShop/PrestaShop/releases/download/8.0.0/prestashop_{{ prestashop_version }}.zip"
+prestashop_directorio: "/var/www/html/"
+prestashop_db_create: 1
+prestashop_db_clear: 1
+prestashop_dominio: "alejandroalsashop.3utilities.com"
+prestashop_db_ip_server: 127.0.0.1
+prestashop_db_engine: "InnoDB"
+prestashop_db_nombre: "Prestashop"
+prestashop_db_usuario: "usuario_prestashop"
+prestashop_db_pass: "e69IY!71sgl4DlN"
+prestashop_db_prefijo: "ps_"
+prestashop_idiaoma: "es"
+prestashop_pais: "es"
+prestashop_zona_horaria: "Europe/Madrid"
+prestashop_ssl: 1
+prestashop_nombre_tienda: "Mi tienda"
+prestashop_nombre: "Alejandro"
+prestashop_apellido: "Alfaro"
+prestashop_pass: "wI7A42$iJCBK*%R@"
+prestashop_email: "alejandro@alejandroalsa.es"
+prestashop_admin_nombre: "alejandroal"
+
+STATS_USER_1: "alejandroalsa"
+STATS_PASSWORD_USER_1: "dNpy2F5u^4uJ^5q0OEGsBAlnO9JLB"

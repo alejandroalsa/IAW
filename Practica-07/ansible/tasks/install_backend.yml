@@ -1,0 +1,26 @@
+---
+- name: Playbook de instalacion de BackEnd
+  hosts: BACKEND
+  become: true
+
+  tasks:
+
+  - name: Actualizando los repositorios
+    ansible.builtin.apt:
+      update_cache: true
+
+  - name: Instalando el sistema gestor de Bases de Datos MySQL
+    ansible.builtin.apt:
+      name: mysql-server
+      state: present
+
+  - name: Modificando variables de MySQL para que acepte conexiones desde cualquier direccion IP
+    ansible.builtin.replace:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: 127.0.0.1
+      replace: 0.0.0.0
+
+  - name: Reiniciando el sistema gestor de Bases de Datos MySQL
+    service:
+      name: mysql
+      state: restarted

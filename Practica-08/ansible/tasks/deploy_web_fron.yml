@@ -1,0 +1,72 @@
+---
+- name: Playbook despliege APP Web
+  hosts: FRONTEND
+  become: true
+
+  tasks:
+
+  - name: Variables de Configuracion
+    ansible.builtin.include_vars:
+      variables.yml
+
+  - name: Eliminando del directorio iaw-practica-lamp de /tmp
+    file:
+      path: /tmp/iaw-practica-lamp
+      state: absent
+
+  - name: Descargando UNZIP
+    apt:
+      name: unzip
+      state: present
+
+  - name: Clonando repositorio de la APP Web
+    git:
+      repo: https://github.com/josejuansanchez/iaw-practica-lamp.git
+      dest: /tmp/iaw-practica-lamp
+
+  - name: Moviendo el codigo fuente de la APP Web a /var/www/html/
+    copy:
+      src: /tmp/iaw-practica-lamp/src/
+      dest: /var/www/html/
+      remote_src: true
+
+  - name: Configurando las variables de conexion (LAMP_DB)
+    ansible.builtin.replace:
+      path: /var/www/html/config.php
+      regexp: lamp_db
+      replace: "{{LAMP_DB}}"
+
+  - name: Configurando las variables de conexion (LAMP_USER)
+    ansible.builtin.replace:
+      path: /var/www/html/config.php
+      regexp: lamp_user
+      replace: "{{LAMP_USER}}"
+
+  - name: Configurando las variables de conexion (LAMP_PASS)
+    ansible.builtin.replace:
+      path: /var/www/html/config.php
+      regexp: lamp_password
+      replace: "{{LAMP_PASS}}"
+
+  - name: Configurando las variables de conexion (LAMP_PASS)
+    ansible.builtin.replace:
+      path: /var/www/html/config.php
+      regexp: localhost
+      replace: "{{LAMP_HOST}}"
+
+  - name: Anadiendo usuario www-data y grupo www-data a todos los directorio y archivos de /var/www/html
+    ansible.builtin.file:
+      path: /var/www/html
+      owner: www-data
+      group: www-data
+      recurse: true
+
+  - name: Eliminando archivo por defecto del servidor Web Apache2.4
+    ansible.builtin.file:
+      path: /var/www/html/index.html
+      state: absent
+
+  - name: Reiniciando el servidor Web Apache2.4
+    service:
+      name: apache2
+      state: restarted

@@ -1,0 +1,63 @@
+---
+- name: Playbook para crear balanceador de carga en Apache2.4
+  hosts: SERVER
+  become: true
+
+  tasks:
+
+    - name: Variables de Configuracion
+      ansible.builtin.include_vars:
+        variables.yml
+
+    - name: Instalando servidor web Apache2.4
+      apt:
+        name: apache2
+        state: present
+
+    - name: Activando modulos de Apache
+      community.general.apache2_module:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - proxy
+        - proxy_http
+        - proxy_ajp
+        - rewrite
+        - deflate
+        - headers
+        - proxy_balancer
+        - proxy_connect
+        - proxy_html
+        - lbmethod_byrequests
+
+    - name: Eliminando 000-default.conf
+      ansible.builtin.file:
+        path: /etc/apache2/sites-available/000-default.conf
+        state: absent
+
+    - name: Creando 000-default.conf
+      ansible.builtin.file:
+        path: /etc/apache2/sites-available/000-default.conf
+        state: touch
+
+    - name: Añadiendo directivas de balanceador a 000-default.conf
+      ansible.builtin.blockinfile:
+        path: /etc/apache2/sites-available/000-default.conf
+        block: |
+            <VirtualHost *:80>
+
+                <Proxy balancer://mycluster>
+                    # Server 1
+                    BalancerMember http://{{ IP_HTTP_SERVER_01 }}
+
+                    # Server 2
+                    BalancerMember http://{{ IP_HTTP_SERVER_02 }}
+                </Proxy>
+
+                ProxyPass / balancer://mycluster/
+            </VirtualHost>
+
+    - name: Reiniciando Apache2.4
+      service:
+        name: apache2.service
+        state: restarted

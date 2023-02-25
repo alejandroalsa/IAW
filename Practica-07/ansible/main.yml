@@ -1,0 +1,6 @@
+---
+  - import_playbook: ./tasks/install_backend.yml
+  - import_playbook: ./tasks/deploy_backend.yml
+
+  - import_playbook: ./tasks/install_frontend.yml
+  - import_playbook: ./tasks/deploy_frontend.yml

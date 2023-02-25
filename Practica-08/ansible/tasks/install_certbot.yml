@@ -1,0 +1,43 @@
+---
+- name: PlayBook para instalar Certbot
+  hosts: SERVER
+  become: true
+
+  tasks:
+
+    - name: Variables de Configuracion
+      ansible.builtin.include_vars:
+        variables.yml
+
+    - name: Asegurando de que Snapd esté instalado
+      package:
+        name: snapd
+        state: present
+      register: snapd_install
+
+    - name: Asegurando de que snapd esté habilitado.
+      systemd:
+        name: snapd.socket
+        enabled: true
+        state: started
+
+    - name: Instalando y actualizando snapd
+      shell: snap install core; snap refresh core
+      changed_when: true
+      failed_when: false
+      when: snapd_install is changed
+
+    - name: Instalando Certbot
+      community.general.snap:
+        name: certbot
+        classic: true
+
+    - name: Creando un alias para Certbot
+      file:
+        src: /snap/bin/certbot
+        dest: /usr/bin/certbot
+        state: link
+
+    - name: Obteniendo certificado SSL y configurando el servidor web.
+      command: certbot --apache -m {{ EMAIL }} --agree-tos --no-eff-email -d {{ DOMAIN }}
+

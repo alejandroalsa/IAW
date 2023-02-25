@@ -1,0 +1,16 @@
+---
+DB_HOST_PRIVATE_IP: 172.31.74.18
+DB_NAME: alejandroalsa
+DB_USER: alejandroalsa
+DB_PASS: alejandroalsa
+
+WP_HOME: https://alejandrosanchez.ddns.net
+WP_SITEURL: https://alejandrosanchez.ddns.net/wordpress
+
+EMAIL: alejandro@alejandroalsa.es
+DOMAIN: alejandrosanchez.ddns.net
+
+NFS_SERVER_IP_PRIVATE: 172.31.71.187
+
+IP_HTTP_SERVER_1: 3.238.173.163
+IP_HTTP_SERVER_2: 3.237.19.10

@@ -1,0 +1,60 @@
+---
+- name: Playbook despliege APP Web
+  hosts: BACKEND
+  become: true
+
+  tasks:
+
+  - name: Variables de Configuracion
+    ansible.builtin.include_vars:
+      variables.yml
+
+  - name: Eliminando del directorio iaw-practica-lamp de /tmp
+    file:
+      path: /tmp/iaw-practica-lamp
+      state: absent
+
+  - name: Descargando UNZIP
+    apt:
+      name: unzip
+      state: present
+
+  - name: Instalando el gestor de paquetes de Python3
+    apt:
+      name: python3-pip
+      state: present
+
+  - name: Instalando el modulo de pymysql
+    pip:
+      name: pymysql
+      state: present
+
+  - name: Clonando repositorio de la APP Web
+    git:
+      repo: https://github.com/josejuansanchez/iaw-practica-lamp.git
+      dest: /tmp/iaw-practica-lamp
+
+  - name: Modificando el contenido de la Base de Datos
+    ansible.builtin.replace:
+      path: /tmp/iaw-practica-lamp/db/database.sql
+      regexp: lamp_db
+      replace: "{{ LAMP_DB }}"
+
+  - name: Añadiendo la Base de Datos
+    ansible.builtin.shell:
+      mysql -u root < /tmp/iaw-practica-lamp/db/database.sql
+
+  - name: Creando usuario para la Base de Datos
+    no_log: true
+    mysql_user:
+      name: "{{ LAMP_USER }}"
+      host: '%'
+      password: "{{ LAMP_PASS }}"
+      priv: "{{ LAMP_DB }}.*:ALL,GRANT"
+      state: present
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+
+  - name: Reiniciando el Servicio de MySQL
+    service:
+      name: mysql
+      state: restarted

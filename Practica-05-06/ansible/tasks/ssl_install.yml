@@ -1,0 +1,46 @@
+---
+- name: Playbook configurar SSL
+  hosts: SERVER
+  become: true
+  # vars_files:
+  #   - ./variables/variables.yml
+
+
+  tasks:
+
+
+    - name: Añadimos las variables
+      ansible.builtin.include_vars:
+        ../variables/variables.yml
+
+    - name: Actualizando repositorios
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Instalando y actualizando snapd
+      ansible.builtin.shell: snap install core; sudo snap refresh core
+
+
+    - name: Eliminando instalación de Cerboot
+      ansible.builtin.apt:
+        name: certbot
+        state: absent
+
+    - name: Añadiendo AllowOverride al VirtualHost
+      ansible.builtin.blockinfile:
+        path: /etc/apache2/sites-available/000-default.conf
+        block: |
+            <Directory "/var/www/html/">
+                AllowOverride ALL
+            </Directory>
+
+    - name: Instalando Cerboot
+      community.general.snap:
+        name: certbot
+        classic: true
+
+    - name: Creando un alias para Cerboot
+      ansible.builtin.shell: ln -s /snap/bin/certbot /usr/bin/certbot
+
+    - name: Obteniendo certificado SSL
+      ansible.builtin.shell: certbot --apache -m {{ prestashop_email }} --agree-tos --no-eff-email -d {{ prestashop_dominio }}

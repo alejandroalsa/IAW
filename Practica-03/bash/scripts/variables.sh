@@ -1,0 +1,3 @@
+LAMP_DB=alejandro
+LAMP_USER=alejandro
+LAMP_PASS=alejandro

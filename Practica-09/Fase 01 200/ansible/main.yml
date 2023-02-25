@@ -1,0 +1,6 @@
+---
+  - import_playbook: ./tasks/lamp_install_back.yml
+  - import_playbook: ./tasks/lamp_install_fron.yml
+
+  - import_playbook: ./tasks/deploy_wp_back.yml
+  - import_playbook: ./tasks/deploy_wp_fron.yml

@@ -1,0 +1,26 @@
+---
+- name: Playbook para instalar la pila LAMP
+  hosts: bak
+  become: true
+
+  tasks:
+
+    - name: Actualizando repositorios
+      apt:
+        update_cache: true
+
+    - name: Instalando sistema de base de datos MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Modificando variables de MySQL para que acepte conexiones desde cualquier direccion IP
+      ansible.builtin.replace:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: 127.0.0.1
+        replace: 0.0.0.0
+
+    - name: Reiniciando Mysql
+      service:
+        name: mysql
+        state: restarted

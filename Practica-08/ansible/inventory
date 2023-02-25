@@ -1,0 +1,14 @@
+[SERVER]
+35.174.62.227
+
+[FRONTEND]
+35.175.119.63
+3.236.5.112
+
+[BACKEND]
+18.204.48.6
+
+[all:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/home/alejandro/AWS/vockey.pem
+ansible_ssh_common_args='-o StrictHostKeyChecking=accept-new'

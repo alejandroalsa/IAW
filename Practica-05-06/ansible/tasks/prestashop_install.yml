@@ -1,0 +1,153 @@
+---
+- name: Playbook para instalar PrestaShop
+  hosts: SERVER
+  become: true
+  # import: ./variables/variables.yml
+
+
+  tasks:
+
+    - name: Añadimos las variables
+      ansible.builtin.include_vars:
+        ../variables/variables.yml
+
+    - name: Actualizando repositorios
+      ansible.builtin.apt:
+        update_cache: true
+
+    # - name: Instalando PHP y mudulos de PHP
+    #   ansible.builtin.apt:
+    #     name: "{{ item }}"
+    #     state: present
+    #   loop:
+    #     - php
+    #     - libapache2-mod-php
+    #     - php-mysql
+    #     - php-common
+    #     - php-curl
+    #     - php-gd
+    #     - php-imagick
+    #     - php-mbstring
+    #     - php-json
+    #     - php-xsl
+    #     - php-intl
+    #     - php-zip
+    #     - php-bcmath
+    #     - php-patchwork-utf8
+    #     - php-memcache
+    #     - php-memcached
+    #     - php-simplexml
+
+    - name: Instalando el gestor de paquetes de Python3
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+
+    - name: Instalando modulo de pymysql
+      ansible.builtin.pip:
+        name: pymysql
+        state: present
+
+    - name: Creando Base de Datos de Prestashop
+      community.mysql.mysql_db:
+        name: "{{ prestashop_db_nombre }}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Creando usuario para la Base de Datos de Prestashop
+      no_log: true
+      community.mysql.mysql_user:
+        name: "{{ prestashop_db_usuario }}"
+        password: "{{ prestashop_db_pass }}"
+        priv: "{{ prestashop_db_nombre }}.*:ALL"
+
+        # host: "%"
+
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Activando modulos de Apache
+      community.general.apache2_module:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - alias
+        - env
+        - headers
+        - rewrite
+
+    - name: Aumentando entrada maxima de PHP de 1000 MB a 5000 MB
+      shell: sed -i 's/;max_input_vars = 1000/max_input_vars = 5000/' /etc/php/8.1/apache2/php.ini
+
+    - name: Aumentando la memoria limite de PHP de 128 MB a 256 MB
+      shell: sed -i 's/memory_limit = 128M/memory_limit = 256M/' /etc/php/8.1/apache2/php.ini
+
+    - name: Aumentando el tamaño máximo de publicación de PHP de 8 MB a 128 MB
+      shell: sed -i 's/post_max_size = 8M/post_max_size = 128M/' /etc/php/8.1/apache2/php.ini
+
+    - name: Aumentando el tamaño maximo de subida de archivos de de PHP de 2 MB a 128 MB
+      shell: sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/' /etc/php/8.1/apache2/php.ini
+
+    - name: Creamos el directorio de PrestaShop.
+      ansible.builtin.file:
+        path: "{{ prestashop_directorio }}"
+        owner: www-data
+        group: www-data
+        mode: 0755
+        state: directory
+
+    - name: Descargando Prestashop
+      ansible.builtin.get_url:
+        url: "{{ prestashop_url_descarga }} "
+        dest: "{{ prestashop_directorio }}"
+
+    - name: Descargando UNZIP
+      ansible.builtin.apt:
+        name: unzip
+        state: present
+
+    - name: Eliminando index.html de la carpeta HTML
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: Descomprimiendo Prestashop + añadiendo usuario www-data y grupo www-data
+      ansible.builtin.unarchive:
+        src: "{{ prestashop_directorio }}prestashop_{{ prestashop_version }}.zip"
+        dest: "{{ prestashop_directorio }}"
+        remote_src: true
+        owner: www-data
+        group: www-data
+
+    - name: Borrand zip de Prestashop.
+      ansible.builtin.file:
+        state: absent
+        path: "{{ prestashop_directorio }}/prestashop_{{ prestashop_version }}.zip"
+
+    - name: Descomprimiendo Prestashop
+      ansible.builtin.unarchive:
+          src: "{{ prestashop_directorio }}prestashop.zip"
+          dest: "{{ prestashop_directorio }}"
+          remote_src: true
+          owner: www-data
+          group: www-data
+
+    - name: Reiniciando Apache2.4
+      ansible.builtin.service:
+        name: apache2.service
+        state: restarted
+
+    - name: Instalando Prestashop
+      ansible.builtin.command: "php index_cli.php --domain={{ prestashop_dominio }} --db_create={{ prestashop_db_create }} --db_clear={{ prestashop_db_clear }} --db_server={{ prestashop_db_ip_server }} --db_name={{ prestashop_db_nombre }} --db_user={{ prestashop_db_usuario }} --db_password={{ prestashop_db_pass }} --engine={{ prestashop_db_engine }} --prefix={{ prestashop_db_prefijo }} --language={{ prestashop_idiaoma }} --country={{ prestashop_pais }} --timezone={{ prestashop_zona_horaria }} --firstname={{ prestashop_nombre }} --lastname={{ prestashop_apellido }} --password={{ prestashop_pass }} --email={{ prestashop_email }} --name{{ prestashop_nombre_tienda }} --ssl={{ prestashop_ssl }}"
+      args:
+        chdir: "{{ prestashop_directorio }}install"
+
+    - name: Eliminando Carpeta Install de PrestaShop
+      ansible.builtin.file:
+        path: /var/www/html/install
+        state: absent
+
+    - name: Reiniciando Apache2.4
+      ansible.builtin.service:
+        name: apache2.service
+        state: restarted

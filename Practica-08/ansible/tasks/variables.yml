@@ -1,0 +1,9 @@
+---
+IP_HTTP_SERVER_01: 172.31.76.15
+IP_HTTP_SERVER_02: 172.31.72.8
+LAMP_DB: alejandro
+LAMP_USER: alejandro
+LAMP_PASS: alejandro
+LAMP_HOST: 172.31.76.244
+DOMAIN: alejandroalsa01.ddns.net
+EMAIL: alejandro@alejandroalsa.es

@@ -1,0 +1,33 @@
+---
+- name: Playbook de instalacion de FrontEnd
+  hosts: FRONTEND
+  become: true
+
+  tasks:
+
+  - name: Variables de Configuracion
+    ansible.builtin.include_vars:
+      variables.yml
+
+  - name: Actualizando repositorios
+    apt:
+      update_cache: true
+
+  - name: Instalando el servidor Web Apache2.4
+    apt:
+      name: apache2
+      state: present
+
+  - name: Instalando PHP y mudulos de PHP
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - php
+      - libapache2-mod-php
+      - php-mysql
+
+  - name: Reiniciando el servidor Web Apache2.4
+    service:
+      name: apache2
+      state: restarted 
