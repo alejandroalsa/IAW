@@ -1,0 +1,18 @@
+User:
+  Directory: /home/ubuntu/WP-DOCKER-COMPOSE
+  Directory_WP: /home/ubuntu/WP-DOCKER-COMPOSE/Docker
+  Name_Group: ubuntu
+
+Type_Install:
+  User_Home: /home/ubuntu/.docker/cli-plugins
+  Multi_User_Directory: /usr/local/lib/docker/cli-plugins
+
+Compose_File:
+  New_Name: docker-compose
+  Local_Files: ../Docker
+
+Docker:
+  Package: docker.io
+  Group: docker
+  Service: docker.service
+  File: docker-compose.yml

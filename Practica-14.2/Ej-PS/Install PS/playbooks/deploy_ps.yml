@@ -1,0 +1,17 @@
+---
+- name: Playbook para instalar DOCKER
+  hosts: EC2
+  become: true
+
+  tasks:
+
+  - name: Variables de Configuracion
+    ansible.builtin.include_vars:
+      ../variables/variables.yml
+
+  - name: Iniciando el contenedor de PS
+    community.docker.docker_compose:
+      project_src: "{{ User.Directory_PS }}"
+      state: present
+      files:
+        - "{{ Docker.File }}"

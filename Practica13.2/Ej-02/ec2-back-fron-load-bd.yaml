@@ -1,0 +1,18 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Despliegue completo de los servidores para la infraestructura de la Prac. 07
+Resources:
+  EC2-BackEnd:
+    !Transform
+      - Name: EC2/EC2-BackEnd/ec2-backend.yaml
+  EC2-FrontEnd:
+    !Transform
+      - Name: EC2/EC2-FrontEnd/ec2-frontend.yaml
+  EC2-LoadBalancer:
+    !Transform
+      - Name: EC2/EC2-LoadBalancer/ec2-loadbalancer.yaml
+  EC2-DataBase:
+    !Transform
+      - Name: EC2/EC2-DataBase/ec2-database.yaml
+  EC2-NFS:
+    !Transform
+      - Name: EC2/EC2-NFS/ec2-nfs.yaml

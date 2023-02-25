@@ -1,0 +1,3 @@
+---
+  - import_playbook: ./playbooks/ec2_frontend.yml
+  - import_playbook: ./playbooks/ec2_backend.yml

@@ -1,0 +1,6 @@
+---
+  - import_playbook: ./playbooks/ec2_data.yml
+  - import_playbook: ./playbooks/ec2_front_01.yml
+  - import_playbook: ./playbooks/ec2_front_02.yml
+  - import_playbook: ./playbooks/ec2_load.yml
+  - import_playbook: ./playbooks/ec2_nfs.yml

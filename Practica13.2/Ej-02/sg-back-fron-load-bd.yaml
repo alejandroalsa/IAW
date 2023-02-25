@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creacion completa de los grupos de seguridad necesarios para el depliegue de la infraestructura de la Prac. 07
+Resources:
+  SG-BackEnd:
+    !Transform
+      - Name: SG/SG-FrontEnd/sg-frontend.yaml
+  SG-FrontEnd:
+    !Transform
+      - Name: SG/SG-BackEnd/sg-backtend.yaml
+  SG-LoadBalancer:
+    !Transform
+      - Name: SG/SG-LoadBalancer/sg-loadbalancer.yaml
+  SG-DataBase:
+    !Transform
+      - Name: SG/SG-DataBase/sg-database.yaml
+  SG-NFS:
+    !Transform
+      - Name: SG/SG-NFS/sg-nfs.yaml
+
