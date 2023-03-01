@@ -22,10 +22,5 @@
             break;
         case 7:
             echo "Hoy es <strong>DOMINGO</strong> ($dia)";
-            break;
     }
 ?>
-
-
-
-
