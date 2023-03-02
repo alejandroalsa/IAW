@@ -19,4 +19,13 @@
     echo "<br>";   
     echo "Media del array = $total";
 
+    $suma = 0;
+
+    for ($i = 0; $i < 10; $i++ ) {
+        $suma = $suma + $temp[$i];
+    }
+    echo "<br>"; 
+    echo $suma;
 ?>
+
+
