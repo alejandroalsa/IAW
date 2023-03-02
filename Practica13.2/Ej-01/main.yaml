@@ -7,3 +7,9 @@ Resources:
   EC2-FrontEnd:
     !Transform
       - Name: EC2/EC2-FrontEnd/ec2-frontend.yaml
+  SG-BackEnd:
+    !Transform
+      - Name: SG/SG-BackEnd/sg-backend.yml
+  SG-FrontEnd:
+    !Transform
+      - Name: SG/SG-FrontEnd/sg-frontend.yml

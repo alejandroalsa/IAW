@@ -2,21 +2,22 @@ version: '3.3'
 
 services:
   prestashop:
-    image: prestashop/prestashop:1.7
+    image:  bitnami/prestashop:8.0.1
     environment:
-      - PS_INSTALL_AUTO=${PS_INSTALL_AUTO:-1}
-      - DB_SERVER=${DB_SERVER:-mysql}
-      - DB_USER=${MYSQL_USER}
-      - DB_PASSWD=${MYSQL_PASSWORD}
-      - DB_NAME=${MYSQL_DATABASE}
-      - PS_DOMAIN=${PS_DOMAIN}
-      - PS_ENABLE_SSL=${PS_ENABLE_SSL:-1}
-      - PS_FOLDER_INSTALL=${PS_FOLDER_INSTALL:-install-dev}
-      - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN:-admin-dev}
-      - PS_COUNTRY=${PS_COUNTRY:-es}
-      - PS_LANGUAGE=${PS_LANGUAGE:-es}
-      - ADMIN_MAIL=${ADMIN_MAIL}
-      - ADMIN_PASSWD=${ADMIN_PASSWD}
+
+      - PRESTASHOP_DATABASE_HOST=${DB_SERVER:-mysql}
+      - PRESTASHOP_DATABASE_USER=${MYSQL_USER}
+      - PRESTASHOP_DATABASE_PASSWORD=${MYSQL_PASSWORD}
+      - PRESTASHOP_DATABASE_NAME=${MYSQL_DATABASE}
+
+      - PRESTASHOP_FIRST_NAME=${PS_FIRST_NAME}
+      - PRESTASHOP_LAST_NAME=${PS_LAST_NAME}
+      - PRESTASHOP_HOST=${PS_DOMAIN}
+      - PRESTASHOP_ENABLE_HTTPS=${PS_ENABLE_SSL:-1}
+      - PRESTASHOP_COUNTRY=${PS_COUNTRY:-es}
+      - PRESTASHOP_LANGUAGE=${PS_LANGUAGE:-es}
+      - PRESTASHOP_EMAIL=${ADMIN_MAIL}
+      - PRESTASHOP_PASSWORD=${ADMIN_PASSWD}
 
     restart: always
     volumes:
