@@ -1,5 +1,5 @@
 [EC2]
-23.21.247.242
+3.212.175.226
 
 [all:vars]
 ansible_user=ubuntu

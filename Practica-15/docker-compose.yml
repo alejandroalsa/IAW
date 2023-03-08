@@ -38,6 +38,9 @@ services:
       - ./grafana-provisioning/:/etc/grafana/provisioning
     depends_on:
       - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
 
   chronograf:
     image: chronograf:1.8
