@@ -32,7 +32,7 @@
 			echo "<p>Velocidad del viento: " . $data->wind->speed . " km/h</p>";
 		}
 	?>
-	<h2>En su dia profesor cree una web que realizava la misma funcion que esta</h2>
+	<h2>En su día profesor cree una web que realiza la misma función que esta, pero más bonita</h2>
 	<a href="https://apps.alejandroalsa.es/proyectos/weather-app/">Weather APP Web alejandroalsa.es</a>
 </body>
 </html>
