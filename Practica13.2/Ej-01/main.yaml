@@ -1,15 +1,170 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Despliegue completo de los servidores para la infraestructura de la Prac. 07
+
+Parameters:
+  IdAmi:
+    Type: String
+    Default: ami-06878d265978313ca
+
+  Ram4Gb:
+    Type: String
+    Default: t2.medium
+
+  Ram8Gb:
+    Type: String
+    Default: t2.large
+
+  FrontendInstanceName:
+    Type: String
+    Default: iaw-practica-07-frontend
+
+  BackendInstanceName:
+    Type: String
+    Default: iaw-practica-07-backend
+
+  KeyFileName:
+    Type: String
+    Default: vockey
+
+  FrontendSecurityGroupName:
+    Type: String
+    Default: SG_Frontend_No_Balancer_07
+
+  FrontendSecurityGroupDescription:
+    Type: String
+    Default: Grupo de seguridad para la instancia frontend sin balanceador de carga
+
+  BackendSecurityGroupName:
+    Type: String
+    Default: SG_Backend_07
+
+  BackendSecurityGroupDescription:
+    Type: String
+    Default: Grupo de seguridad para las instancias backend
+
+  SgIpProtocol:
+    Type: String
+    Default: tcp
+  
+  SgCidrIp:
+    Type: String
+    Default: 0.0.0.0/0
+
+  SshPort:
+    Type: String
+    Default: 22
+
+  HttpsPort:
+    Type: String
+    Default: 443
+
+  HttpPort:
+    Type: String
+    Default: 80
+
+  SqlPort:
+    Type: String
+    Default: 3306
+
+
 Resources:
-  EC2-BackEnd:
-    !Transform
-      - Name: EC2/EC2-BackEnd/ec2-backend.yaml
-  EC2-FrontEnd:
-    !Transform
-      - Name: EC2/EC2-FrontEnd/ec2-frontend.yaml
-  SG-BackEnd:
-    !Transform
-      - Name: SG/SG-BackEnd/sg-backend.yml
-  SG-FrontEnd:
-    !Transform
-      - Name: SG/SG-FrontEnd/sg-frontend.yml
+  FrontendNoBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName:
+        Ref: FrontendSecurityGroupName
+      GroupDescription:
+        Ref: FrontendSecurityGroupDescription
+      SecurityGroupIngress:
+        - IpProtocol:
+            Ref: SgIpProtocol
+          FromPort:
+            Ref: SshPort
+          ToPort:
+            Ref: SshPort
+          CidrIp:
+            Ref: SgCidrIp
+
+        - IpProtocol:
+            Ref: SgIpProtocol
+          FromPort:
+            Ref: HttpsPort
+          ToPort:
+            Ref: HttpsPort
+          CidrIp:
+            Ref: SgCidrIp
+
+        - IpProtocol:
+            Ref: SgIpProtocol
+          FromPort:
+            Ref: HttpPort
+          ToPort:
+            Ref: HttpPort
+          CidrIp:
+            Ref: SgCidrIp
+
+
+  BackendSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName:
+        Ref: BackendSecurityGroupName
+      GroupDescription:
+        Ref: BackendSecurityGroupDescription
+      SecurityGroupIngress:
+        - IpProtocol:
+            Ref: SgIpProtocol
+          FromPort:
+            Ref: SshPort
+          ToPort:
+            Ref: SshPort
+          CidrIp:
+            Ref: SgCidrIp
+
+        - IpProtocol:
+            Ref: SgIpProtocol
+          FromPort:
+            Ref: SqlPort
+          ToPort:
+            Ref: SqlPort
+          CidrIp:
+            Ref: SgCidrIp
+
+
+  FrontendInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId:
+        Ref: IdAmi
+      InstanceType:
+        Ref: Ram4Gb
+      SecurityGroups:
+        - !Ref FrontendNoBalancerSecurityGroup
+      KeyName:
+        Ref: KeyFileName
+      Tags:
+        - Key: Name
+          Value:
+            Ref: FrontendInstanceName
+
+
+  BackendInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId:
+        Ref: IdAmi
+      InstanceType:
+        Ref: Ram8Gb
+      SecurityGroups:
+        - !Ref BackendSecurityGroup
+      KeyName:
+        Ref: KeyFileName
+      Tags:
+        - Key: Name
+          Value:
+            Ref: BackendInstanceName
+
+
+  FrontendElascticIp:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref FrontendInstance

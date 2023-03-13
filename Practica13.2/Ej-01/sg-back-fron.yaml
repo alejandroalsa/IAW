@@ -1,9 +1,0 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Description: Creacion completa de los grupos de seguridad necesarios para el depliegue de la infraestructura de la Prac. 07
-Resources:
-  SG-BackEnd:
-    !Transform
-      - Name: SG/SG-BackEnd/sg-backend.yml
-  SG-FrontEnd:
-    !Transform
-      - Name: SG/SG-FrontEnd/sg-frontend.yml

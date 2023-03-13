@@ -1,0 +1,6 @@
+IMAGE_ID=ami-0b93ce03dcbcb10f6
+COUNT=1
+INSTANCE_TYPE=t2.micro
+KEY_NAME=vockey
+SECURITY_GROUP_DEFAULT=default
+INSTANCE_NAME="ejecucion-user-data"
